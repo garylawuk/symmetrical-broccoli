@@ -22,8 +22,10 @@ Not documented.
 
 ## Install key pair into each region
 
+```
 for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
 do
     aws ec2 --region "${i}" import-key-pair --key-name "symmetrical-broccoli"  --public-key-material "$(tail -1 .ssh/authorized_keys)"
 done
+```
 
