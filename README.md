@@ -68,5 +68,29 @@ do
     aws ec2  --region "${i}" associate-route-table --subnet-id "${SUBNETID}" --route-table-id "${RTID}"
  done
  ```
+ 
+ create an SG inbound 22 outbound everything Ethereum clients use a listener (TCP) port and a discovery (UDP) port, both on 30303 by default also UDP 30301
+
+## Launch instance
+
+p2.xlarge
+ami-7e3a5b1e
+keypair symmetrical-broccoli
+pytorch-cuda75
+ 
+ aws ec2 --region us-east-1 run-instances --subnet-id subnet-cd6649f1 --image-id ami-39269d2f --key-name symmetrical-broccoli --associate-public-ip-address --instance-type p2.xlarge
+ 
+ssh as ubuntu
+
+sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum-qt
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo add-apt-repository -y ppa:ethereum/ethereum-dev
+sudo apt-get update
+sudo apt-get install -y ethereum
+sudo apt-get install -y cpp-ethereum
+
+run 'geth'
+
 
 
