@@ -29,3 +29,44 @@ do
 done
 ```
 
+## Create VPC in each region
+
+```
+cd
+mkdir -p symmetrical-broccoli
+cd symmetrical-broccoli
+for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
+do
+    aws ec2 --region "${i}" create-vpc --cidr-block "10.10.10.0/24" --no-amazon-provided-ipv6-cidr-block > "symmetrical-broccoli-vpc-${i}"
+done
+```
+
+## Set up each VPC
+
+### Tags
+```
+for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
+do
+    VPCID=$(awk -F\" '/VpcId/ {print $4}' < symmetrical-broccoli-vpc-${i})
+    aws ec2 --region "${i}" create-tags --resources "${VPCID}" --tags "Key=Name,Value=symmetrical-broccoli"
+ done
+ ```
+ 
+### Networking for each VPC
+```
+for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
+do
+    VPCID=$(awk -F\" '/VpcId/ {print $4}' < symmetrical-broccoli-vpc-${i})
+    aws ec2 --region "${i}" create-subnet --vpc-id "${VPCID}" --cidr-block "10.10.10.0/24" > "symmetrical-broccoli-subnet-${i}"
+    SUBNETID=$(awk -F\" '/SubnetId/ {print $4}' < symmetrical-broccoli-subnet-${i})
+    aws ec2 --region "${i}" create-internet-gateway > "symmetrical-broccoli-internetgateway-${i}"
+    IGWID=$(awk -F\" '/InternetGatewayId/ {print $4}' < symmetrical-broccoli-internetgateway-${i})
+    aws ec2 --region "${i}" attach-internet-gateway --vpc-id "${VPCID}" --internet-gateway-id "${IGWID}"
+    aws ec2 --region "${i}" create-route-table --vpc-id  "${VPCID}"  > "symmetrical-broccoli-routetable-${i}"
+    RTID=$(awk -F\" '/RouteTableId/ {print $4}' < symmetrical-broccoli-routetable-${i})
+    aws ec2 --region "${i}" create-route --route-table-id "${RTID}" --destination-cidr-block "0.0.0.0/0" --gateway-id "${IGWID}"
+    aws ec2  --region "${i}" associate-route-table --subnet-id "${SUBNETID}" --route-table-id "${RTID}"
+ done
+ ```
+
+
