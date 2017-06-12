@@ -87,6 +87,10 @@ http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
 
 /dev/xvdf ?
 
+Build binary?
+
+apt-get install cmake
+
 
 
 
