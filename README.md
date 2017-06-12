@@ -114,7 +114,7 @@ sudo apt-get install -y cpp-ethereum
 
 
 
-then run 'nohup geth'
+then run 'nohup geth --cache=1024'
 
 ```
 geth
