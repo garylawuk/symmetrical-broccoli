@@ -120,6 +120,12 @@ while that's running
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:george-edison55/cmake-3.x
 sudo apt-get update
+https://cmake.org/files/v3.8/cmake-3.8.2-Linux-x86_64.tar.gz
+
+mkdir build; cd build
+cmake ..
+cmake --build .
+
 
 
 
