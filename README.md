@@ -83,6 +83,12 @@ Not documented
 
 /dev/sdf
 
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+
+/dev/xvdf ?
+
+
+
 
 
 ```
@@ -104,7 +110,7 @@ sudo apt-get install -y cpp-ethereum
 
 
 
-then run 'geth'
+then run 'nohup geth'
 
 ```
 geth
