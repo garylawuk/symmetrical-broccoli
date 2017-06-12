@@ -77,6 +77,14 @@ do
 
 based mine on pytorch-cuda75
 
+create a 512Gb volume
+
+Not documented
+
+/dev/sdf
+
+
+
 ```
 aws ec2 --region us-east-1 run-instances --subnet-id subnet-cd6649f1 --image-id ami-39269d2f --key-name symmetrical-broccoli --associate-public-ip-address --instance-type p2.xlarge
 ```
@@ -92,6 +100,9 @@ sudo apt-get update
 sudo apt-get install -y ethereum
 sudo apt-get install -y cpp-ethereum
 ```
+
+
+
 
 then run 'geth'
 
