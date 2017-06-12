@@ -111,10 +111,18 @@ sudo apt-get install -y ethereum
 sudo apt-get install -y cpp-ethereum
 ```
 
-
-
-
 then run 'nohup geth --cache=1024'
+
+
+while that's running
+
+
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:george-edison55/cmake-3.x
+sudo apt-get update
+
+
+
 
 ```
 geth
