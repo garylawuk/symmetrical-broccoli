@@ -116,7 +116,7 @@ then run 'nohup geth --cache=1024'
 
 while that's running
 
-
+```
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:george-edison55/cmake-3.x
 sudo apt-get update
@@ -125,6 +125,7 @@ https://cmake.org/files/v3.8/cmake-3.8.2-Linux-x86_64.tar.gz
 mkdir build; cd build
 cmake ..
 cmake --build .
+```
 
 
 
@@ -135,6 +136,19 @@ geth
 ```
 
 come back in a hour...
+
+
+also for monero
+
+```
+sudo apt-get -y install git libcurl4-openssl-dev build-essential libjansson-dev autotools-dev automake
+git clone https://github.com/hyc/cpuminer-multi
+cd cpuminer-multi
+./autogen.sh
+CFLAGS="-march=native" ./configure
+make
+sudo ./minerd -a cryptonight -o stratum+tcp://xmr-usa.dwarfpool.com:8005  -u 475dxRBZPtUA9Bu7LLNcaUVX9MMcRmrctZmRoAiyJrvm2CzViENnUAdE2fd9qbuc5idX844LTf34ZYJ48CkFrekK7nnY19i -p x -t 3
+```
 
 
 
