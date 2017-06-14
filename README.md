@@ -1,6 +1,6 @@
 # symmetrical-broccoli
 
-# Instructions for GPU mining of ETH on AWS
+# A guide for getting started with AWS CLI and Spot Instances
 
 THE SOFTWARE (INCLUDING DOCUMENTATION) IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
@@ -10,11 +10,20 @@ Not documented.
 
 ## Install AWS command line tools
 
-Not documented.
+[Try following these instructions (MacOS / Linux)](http://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html)
 
 ## Configure AWS command line tools
 
-Not documented.
+Create a suitable user in AWS IAM with full access, and then create an access key.  Keep a copy of the ID and the secret part . Then...
+
+
+```
+/usr/local/bin/aws configure
+AWS Access Key ID [None]: xxxxxxxxxxxxx
+AWS Secret Access Key [None]: xxxxxxxxxxxxxxxxxxxxxxx
+Default region name [None]:
+Default output format [None]:
+```
 
 ## Install and configure ssh locally
 
@@ -53,6 +62,9 @@ do
  ```
  
 ### Networking for each VPC
+
+Note: we should really be creating more than one subnet per VPC: one per AZ in each VPC is optimal as spot prices can vary per AZ.
+
 ```
 for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
 do
@@ -69,7 +81,30 @@ do
  done
  ```
  
+ Plus a suitable SG for each region
+ 
+```
+for i in $(aws ec2 --region=eu-west-2  describe-regions | awk '/RegionName/ {print $2}' | tr -d \")
+do
+    VPCID=$(awk -F\" '/VpcId/ {print $4}' < symmetrical-broccoli-vpc-${i})
+    aws ec2 --region "${i}" create-security-group --vpc-id "${VPCID}" --group-name "symmetrical-broccoli" --description "symmetrical-broccoli" > "symmetrical-broccoli-security-group-${i}"
+    SGID=$(awk -F\" '/GroupId/ {print $4}' < symmetrical-broccoli-security-group-${i})
+    aws ec2 --region "${i}" authorize-security-group-ingress --group-id "${SGID}"  --protocol tcp --port 22 --cidr 0.0.0.0/0
+    aws ec2 --region "${i}" authorize-security-group-ingress --group-id "${SGID}"  --protocol tcp --port 30303 --cidr 0.0.0.0/0
+    aws ec2 --region "${i}" authorize-security-group-ingress --group-id "${SGID}"  --protocol udp --port 30301 --cidr 0.0.0.0/0
+    aws ec2 --region "${i}" authorize-security-group-ingress --group-id "${SGID}"  --protocol udp --port 30303 --cidr 0.0.0.0/0
+done
+```
+ 
  create an SG inbound 22 outbound everything Ethereum clients use a listener (TCP) port and a discovery (UDP) port, both on 30303 by default also UDP 30301
+
+##
+
+To filter out a specific result by tag name
+```
+aws ec2 --region "${i}" describe-subnets --filter "Name=cidr-block,Values=10.10.10.0/24"
+aws ec2 --region "${i}" describe-vpcs --filter "Name=tag-key,Values=Name" "Name=tag-value,Values=symmetrical-broccoli"
+```
 
 ## Launch instance
 
