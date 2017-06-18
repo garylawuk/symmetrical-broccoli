@@ -1,0 +1,14 @@
+{
+    "Subnet": {
+        "VpcId": "vpc-485e3f2c", 
+        "AvailableIpAddressCount": 251, 
+        "MapPublicIpOnLaunch": false, 
+        "DefaultForAz": false, 
+        "Ipv6CidrBlockAssociationSet": [], 
+        "State": "pending", 
+        "AvailabilityZone": "ap-southeast-2a", 
+        "SubnetId": "subnet-ef557a8b", 
+        "CidrBlock": "10.10.10.0/24", 
+        "AssignIpv6AddressOnCreation": false
+    }
+}

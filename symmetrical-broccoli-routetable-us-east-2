@@ -1,0 +1,17 @@
+{
+    "RouteTable": {
+        "Associations": [], 
+        "RouteTableId": "rtb-a9a0d2c0", 
+        "VpcId": "vpc-e2234e8b", 
+        "PropagatingVgws": [], 
+        "Tags": [], 
+        "Routes": [
+            {
+                "GatewayId": "local", 
+                "DestinationCidrBlock": "10.10.10.0/24", 
+                "State": "active", 
+                "Origin": "CreateRouteTable"
+            }
+        ]
+    }
+}

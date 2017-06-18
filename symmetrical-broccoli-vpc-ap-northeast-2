@@ -1,0 +1,12 @@
+{
+    "Vpc": {
+        "VpcId": "vpc-b28686db", 
+        "InstanceTenancy": "default", 
+        "Tags": [], 
+        "Ipv6CidrBlockAssociationSet": [], 
+        "State": "pending", 
+        "DhcpOptionsId": "dopt-a04ef4c9", 
+        "CidrBlock": "10.10.10.0/24", 
+        "IsDefault": false
+    }
+}
