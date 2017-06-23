@@ -123,6 +123,7 @@ mkdir -p Downloads
 cd Downloads
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
 dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+cd
 apt-get update
 apt-get -y install autoconf autogen autotools-dev build-essential cmake ethereum gcc-4.9 g++-4.9 git libboost-all-dev libcryptopp-dev libcurl3 libcurl4-gnutls-dev libcurl4-openssl-dev libcryptopp-dev libgmp-dev libjsoncpp-dev libjsonrpccpp-dev libleveldb-dev libmicrohttpd-dev libreadline-dev mesa-common-dev nvidia-361 nvidia-common  nvidia-cuda-toolkit nvidia-prime nvidia-settings ocl-icd-libopencl1 opencl-headers software-properties-common
 (su - glaw ; echo 'SECRET' > password ; geth --password ./password account new ; geth --syncmode=fast --cache=2048)
@@ -132,18 +133,17 @@ apt-get install -y cuda
 # optional ?
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 # sudo apt install nvidia-cuda-toolkit
-
+cd
+mkdir -p Downloads
+cd Downloads
 git clone https://github.com/Genoil/cpp-ethereum/
 cd cpp-ethereum
 mkdir build
 cd build
+cmake -DBUNDLE=miner ..
+make -j8
 
-
-   19  cmake -DBUNDLE=miner ..
-   20  apt-get install libcryptopp-dev
-   21  cmake -DBUNDLE=miner ..
-   22  make -j8
-   23  cd ethminer
+23  cd ethminer
    24  touch mine.sh
    25  chmod 755 mine.sh
    26  vi mine.sh
