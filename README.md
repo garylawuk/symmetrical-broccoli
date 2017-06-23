@@ -185,6 +185,3 @@ make
 sudo ./minerd -a cryptonight -o stratum+tcp://xmr-usa.dwarfpool.com:8005  -u 475dxRBZPtUA9Bu7LLNcaUVX9MMcRmrctZmRoAiyJrvm2CzViENnUAdE2fd9qbuc5idX844LTf34ZYJ48CkFrekK7nnY19i -p x -t 3
 ```
 
-
-
-
