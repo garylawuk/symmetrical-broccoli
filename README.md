@@ -110,7 +110,74 @@ aws ec2 --region "${i}" describe-vpcs --filter "Name=tag-key,Values=Name" "Name=
 
 ### Build the seed image
 
-based mine on pytorch-cuda75
+We are aiming for latest CUDA and Nvidia support on Ubuntu 16.04, for which there are no precompiled binaries or even accurate instructions online.  This works:
+
+
+```
+
+add-apt-repository -y ppa:ethereum/ethereum
+add-apt-repository ppa:graphics-drivers/ppa
+
+cd
+mkdir -p Downloads
+cd Downloads
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+apt-get update
+apt-get -y install autoconf autogen autotools-dev build-essential cmake ethereum gcc-4.9 g++-4.9 git libboost-all-dev libcryptopp-dev libcurl3 libcurl4-gnutls-dev libcurl4-openssl-dev libcryptopp-dev libgmp-dev libjsoncpp-dev libjsonrpccpp-dev libleveldb-dev libmicrohttpd-dev libreadline-dev mesa-common-dev nvidia-361 nvidia-common  nvidia-cuda-toolkit nvidia-prime nvidia-settings ocl-icd-libopencl1 opencl-headers software-properties-common
+(su - glaw ; echo 'SECRET' > password ; geth --password ./password account new ; geth --syncmode=fast --cache=2048)
+apt-get install -y cuda
+# optional ?
+# wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
+# optional ?
+# wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
+# sudo apt install nvidia-cuda-toolkit
+
+git clone https://github.com/Genoil/cpp-ethereum/
+cd cpp-ethereum
+mkdir build
+cd build
+
+
+   19  cmake -DBUNDLE=miner ..
+   20  apt-get install libcryptopp-dev
+   21  cmake -DBUNDLE=miner ..
+   22  make -j8
+   23  cd ethminer
+   24  touch mine.sh
+   25  chmod 755 mine.sh
+   26  vi mine.sh
+   27  ./mine.sh
+   28  sudo apt-get install nvidia-367 libcuda1-367 nvidia-367-opencl-icd-367
+   29  sudo apt-get install nvidia-367 libcuda1-367
+   30  reboot
+   31  cd cpp-ethereum
+   32  history
+
+mkdir /download
+cd /downloads
+git clone https://github.com/wolf9466/cpuminer-multi
+
+Compile and install the cpuminer-multi:
+
+cd cpuminer-multi
+./autogen.sh
+CFLAGS="-march=native" ./configure
+make
+make install
+
+
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update 
+sudo apt-get install build-essential
+sudo apt-get install nvidia-367 
+sudo apt-get install mesa-common-dev
+sudo apt-get install freeglut3-dev
+
+
+
+```
+
 
 create a 512Gb volume
 
