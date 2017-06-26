@@ -114,28 +114,64 @@ We are aiming for latest CUDA and Nvidia support on Ubuntu 16.04, for which ther
 
 
 ```
+apt-get install linux-headers-$(uname -r)
+apt-get purge nvidia*
 
-add-apt-repository -y ppa:ethereum/ethereum
-add-apt-repository ppa:graphics-drivers/ppa
+cd
+mkdir -p Downloads
+cd Downloads
+wget http://us.download.nvidia.com/XFree86/Linux-x86_64/375.20/NVIDIA-Linux-x86_64-375.20.run
+./chmod 777 NVIDIA*run
+sh ./NVIDIA*run
+modprobe nvidia-drm
+cd
+
+# reboot! 
+sudo apt-get install -y opencl-headers build-essential protobuf-compiler libprotoc-dev libboost-all-dev libleveldb-dev hdf5-tools libhdf5-serial-dev libopencv-core-dev libopencv-highgui-dev libsnappy-dev libatlas-base-dev cmake libstdc++6-4.8-dbg libgoogle-glog0v5 libgoogle-glog-dev libgflags-dev liblmdb-dev git python-pip gfortran python-twisted
 
 cd
 mkdir -p Downloads
 cd Downloads
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
 dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+apt-get -y install cuda
+cd
+
+#reboot
+cd
+mkdir -p Downloads
+cd Downloads
+
+wget http://us.download.nvidia.com/XFree86/Linux-x86_64/367.27/NVIDIA-Linux-x86_64-367.27.run
+
+
+add-apt-repository -y ppa:ethereum/ethereum
+add-apt-repository ppa:graphics-drivers/ppa
+
+
 cd
 apt-get update
-apt-get -y install autoconf autogen autotools-dev build-essential cmake ethereum gcc-4.9 g++-4.9 git libargtable2-dev libboost-all-dev libcryptopp-dev libcuda1-367 libcurl3 libcurl4-gnutls-dev libcurl4-openssl-dev libcryptopp-dev libgmp-dev libjsoncpp-dev libjsonrpccpp-dev libleveldb-dev libmicrohttpd-dev libreadline-dev mesa-common-dev nvidia-361 nvidia-367 nvidia-common  nvidia-cuda-toolkit nvidia-prime nvidia-settings ocl-icd-libopencl1 opencl-headers software-properties-common
+apt-get -y install autoconf autogen autotools-dev build-essential cmake ethereum gcc-4.9 g++-4.9 git libargtable2-dev libboost-all-dev libcryptopp-dev libcuda1-367 libcurl3 libcurl4-gnutls-dev libcurl4-openssl-dev libcryptopp-dev libgmp-dev libjsoncpp-dev libjsonrpccpp-dev libleveldb-dev libmicrohttpd-dev libreadline-dev mesa-common-dev nvidia-361 nvidia-367 nvidia-common  nvidia-cuda-toolkit nvidia-prime nvidia-settings ocl-icd-libopencl1 opencl-headers software-properties-common unzip
 apt-get install -y ocl-icd-libopencl1 opencl-headers linux-headers-$(uname -r)
-(su - glaw ; echo 'SECRET' > password ; geth --password ./password account new ; geth --syncmode=fast --cache=2048)
+apt-get install -y python-twisted
+#(su - glaw ; echo 'SECRET' > password ; geth --password ./password account new ; geth --syncmode=fast --cache=2048)
 apt-get install -y cuda
 # optional ?
 # wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
 # optional ?
 # wget https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run
 # sudo apt install nvidia-cuda-toolkit
+
+
 cd
 mkdir -p Downloads
+cd Downloads
+wget http://dwarfpool.com/static/eth-proxy.zip
+unzip eth-proxy.zip
+mv eth-proxy /usr/local/
+
+
+cd
 cd Downloads
 git clone https://github.com/Genoil/cpp-ethereum/
 cd cpp-ethereum
