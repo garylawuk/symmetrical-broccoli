@@ -124,6 +124,9 @@ apt-get install -y nvidia-381
 # check no errors
 nvidia-smi
 
+# reboot
+shutdown -r now
+
 # install cuda
 cd 
 cd Downloads
@@ -135,6 +138,9 @@ sudo apt-get install cuda nvidia-cuda-toolkit cuda-samples-8-0
 # check no errors
 cat /proc/driver/nvidia/version
 nvcc -V
+# reboot
+shutdown -r now
+
 
 
 # install eth-proxy
@@ -147,17 +153,15 @@ mv eth-proxy /usr/local/
 
 sudo apt-get install ethereum ethminer
 
+use cpp-ethereum
+
 # start mining
-nohup ethminer -G -F http://localhost:8080 &
+#nohup ethminer -G -F http://localhost:8080 &
+nohup ethminer -U -F http://localhost:8080 &
 
 ## following steps do not work, ignore
 
  
-
-
-
-
-
 
 # install cuda ethereum miner
 cd
@@ -165,8 +169,8 @@ cd Downloads
 git clone https://github.com/ethereum-mining/ethminer
 cd ethminer
 mkdir -p build; cd build
-cmake -DETHASHCUDA=ON -DETHASHCL=OFF  -DCOMPUTE=50 ..
-cmake -DETHASHCUDA=ON -DETHASHCL=OFF  -DCOMPUTE=50 --build .
+cmake -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-8.0 -DETHASHCUDA=ON  -DETHASHCL=1 ..
+cmake --build .
 make
 
 
