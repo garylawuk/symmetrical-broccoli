@@ -108,6 +108,12 @@ aws ec2 --region "${i}" describe-vpcs --filter "Name=tag-key,Values=Name" "Name=
 
 ## Launch instance
 
+Just pick a cheap running instance in any region to build the image.  Use the symetrical-broccoli ssh key.  Then ssh in...
+
+```
+ssh -lubuntu 54.x.x.x
+```
+
 ### Build the seed image
 
 We are aiming for latest CUDA and Nvidia support on Ubuntu 16.04, for which there are no precompiled binaries or even accurate instructions online.  This works:
@@ -119,6 +125,7 @@ apt-get purge nvidia*
 apt-get install cmake gcc make build-essentials
 add-apt-repository -y ppa:ethereum/ethereum
 add-apt-repository ppa:graphics-drivers/ppa
+apt-get update
 apt-get install -y nvidia-381
 
 # check no errors
@@ -129,6 +136,7 @@ shutdown -r now
 
 # install cuda
 cd 
+mkdir -p Downloads
 cd Downloads
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
