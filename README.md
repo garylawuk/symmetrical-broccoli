@@ -108,7 +108,7 @@ aws ec2 --region "${i}" describe-vpcs --filter "Name=tag-key,Values=Name" "Name=
 
 ## Launch instance
 
-Just pick a cheap running instance in any region to build the image.  Use the symetrical-broccoli ssh key.  Then ssh in...
+Just create a cheap instance in any region to build the image, based on Canonical Ubuntu 16.04 LTS.  I used AMI ```ami-fcc4db98``` in London region. Use the symetrical-broccoli ssh key.  Then ssh in...
 
 ```
 ssh -lubuntu 54.x.x.x
